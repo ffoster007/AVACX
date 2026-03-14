@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# Wrapper to run the AVACX scanner with shorthand options.
+set -euo pipefail
+
+# Resolve this script's directory, following symlinks so it works when installed to ~/.local/bin
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+SCRIPT_DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+
+usage() {
+  cat <<'EOF'
+Usage: avago -? <target> [additional scanner arguments]
+
+  -? <target>    Path to scan, shorthand for --path <target>
+  --             Pass remaining arguments directly to go run ./cmd
+EOF
+}
+
+if [[ $# -eq 0 ]]; then
+  usage >&2
+  exit 1
+fi
+
+scanner_args=()
+pass_through=false
+
+while [[ $# -gt 0 ]]; do
+  if [[ "$pass_through" == true ]]; then
+    scanner_args+=("$1")
+    shift
+    continue
+  fi
+
+  case "$1" in
+    -\?)
+      shift
+      if [[ $# -eq 0 ]]; then
+        echo "avago: missing argument for -?" >&2
+        usage >&2
+        exit 1
+      fi
+      scanner_args+=("--path" "$1")
+      shift
+      ;;
+    --)
+      pass_through=true
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      scanner_args+=("$1")
+      shift
+      ;;
+  esac
+done
+
+cd "$SCRIPT_DIR"
+go run ./cmd "${scanner_args[@]}"
