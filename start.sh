@@ -11,4 +11,5 @@ if [ ! -f ".env" ]; then
 fi
 
 npm install
+npx prisma generate
 npm run dev
