@@ -1,10 +1,11 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$SCRIPT_DIR/webapp" || { echo "ไม่พบ folder webapp"; exit 1; }
+cd "$SCRIPT_DIR/webapp" || { echo "Error: folder 'webapp' not found"; exit 1; }
 
 if [ ! -f ".env" ]; then
-  echo "ไม่พบไฟล์ .env — กรุณา copy จาก .env.example แล้วใส่ค่าให้ครบ"
+  echo "Error: .env file not found"
+  echo "Please copy .env.example and fill in the required values:"
   echo "  cp webapp/.env.example webapp/.env"
   exit 1
 fi
