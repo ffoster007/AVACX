@@ -9,4 +9,5 @@ if (-Not (Test-Path ".env")) {
 }
 
 npm install
+npx prisma generate
 npm run dev
