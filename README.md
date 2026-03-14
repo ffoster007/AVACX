@@ -37,7 +37,7 @@ bash start.sh
 ```
 ## Configuration
 ```
-cp .env.example .env
+cp webapp/.env.example webapp/.env
 ```
 
 
