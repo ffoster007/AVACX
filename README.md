@@ -29,15 +29,13 @@ cd AVACX
 ```
 ## Linux/MacOS:
 ```
+cp webapp/.env.example webapp/.env
 bash start.sh
 ```
 ## Windows:
 ```
+copy webapp\.env.example webapp\.env
 .\start.ps1
-```
-## Configuration
-```
-cp webapp/.env.example webapp/.env
 ```
 
 
