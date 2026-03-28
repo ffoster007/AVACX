@@ -21,6 +21,9 @@
 **Offensive**
 - **Vulture** - Find your SQL security vulnerabilities.
 
+**All in one **
+- **WARNET** - AI powered vulnerability scanner.
+
 ## Get Started
 1. Clone the repository:
 ```
